@@ -40,12 +40,17 @@ public class MainMenuController implements Initializable {
     {
         try
         {
-            Parent root = FXMLLoader.load(getClass().getResource("../View/AddPartForm.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/AddPartForm.fxml"));
+            Parent root = loader.load();
+
+            AddPartFormController controller = loader.getController();
+            controller.setID(parts);
 
             Stage stage = new Stage();
-            stage.setTitle("Add Model.Part");
+            stage.setTitle("Add Part");
             stage.setScene(new Scene(root));
             stage.show();
+
         }
         catch(Exception e)
         {

@@ -14,7 +14,7 @@
    <children>
       <VBox prefHeight="400.0" prefWidth="938.0" style="-fx-padding: 10;">
          <children>
-            <Label prefHeight="44.0" prefWidth="314.0" text="Model.Inventory Management System" />
+            <Label prefHeight="44.0" prefWidth="314.0" text="Inventory Management System" />
             <HBox prefHeight="323.0" prefWidth="821.0" style="-fx-spacing: 20;">
                <children>
                   <Pane prefHeight="323.0" prefWidth="423.0" style="-fx-border-color: Black; -fx-border-radius: 10;">
@@ -23,15 +23,15 @@
                            <children>
                               <HBox prefHeight="44.0" prefWidth="451.0" style="-fx-padding: 5;">
                                  <children>
-                                    <Label prefHeight="18.0" prefWidth="207.0" text="Model.Part" />
-                                    <TextField fx:id="partSearchTxtField" onAction="#onPartSearchTxtField" prefHeight="26.0" prefWidth="162.0" promptText="Search By Model.Part ID or Name" />
+                                    <Label prefHeight="18.0" prefWidth="207.0" text="Part" />
+                                    <TextField fx:id="partSearchTxtField" onAction="#onPartSearchTxtField" prefHeight="26.0" prefWidth="162.0" promptText="Search By Part ID or Name" />
                                  </children>
                               </HBox>
                               <TableView id="partTbl" prefHeight="242.0" prefWidth="391.0">
                                 <columns>
-                                  <TableColumn id="partIDTblCol" prefWidth="75.0" text="Model.Part ID" />
-                                  <TableColumn id="partNameTblCol" prefWidth="75.0" text="Model.Part Name" />
-                                    <TableColumn id="partInvTblCol" prefWidth="111.20002746582031" text="Model.Inventory Level" />
+                                  <TableColumn id="partIDTblCol" prefWidth="75.0" text="Part ID" />
+                                  <TableColumn id="partNameTblCol" prefWidth="75.0" text="Part Name" />
+                                    <TableColumn id="partInvTblCol" prefWidth="111.20002746582031" text="Inventory Level" />
                                     <TableColumn id="partPriceTblCol" prefWidth="124.79998779296875" text="Price/Cost Per Unit" />
                                 </columns>
                               </TableView>
@@ -56,15 +56,15 @@
                            <children>
                               <HBox prefHeight="44.0" prefWidth="451.0" style="-fx-padding: 5;">
                                  <children>
-                                    <Label prefHeight="18.0" prefWidth="207.0" text="Model.Product" />
-                                    <TextField fx:id="productSearchTxtField" onAction="#onProductSearchTxtField" prefHeight="26.0" prefWidth="162.0" promptText="Search By Model.Product ID or Name" />
+                                    <Label prefHeight="18.0" prefWidth="207.0" text="Product" />
+                                    <TextField fx:id="productSearchTxtField" onAction="#onProductSearchTxtField" prefHeight="26.0" prefWidth="162.0" promptText="Search By Product ID or Name" />
                                  </children>
                               </HBox>
                               <TableView id="productTbl" prefHeight="242.0" prefWidth="391.0">
                                  <columns>
-                                    <TableColumn id="productIDTblCol" prefWidth="75.0" text="Model.Product ID" />
-                                    <TableColumn id="productNameTblCol" prefWidth="90.0" text="Model.Product Name" />
-                                    <TableColumn id="productInvTblCol" prefWidth="97.0" text="Model.Inventory Level" />
+                                    <TableColumn id="productIDTblCol" prefWidth="75.0" text="Product ID" />
+                                    <TableColumn id="productNameTblCol" prefWidth="90.0" text="Product Name" />
+                                    <TableColumn id="productInvTblCol" prefWidth="97.0" text="Inventory Level" />
                                     <TableColumn id="productPriceTblCol" prefWidth="124.79998779296875" text="Price/Cost Per Unit" />
                                  </columns>
                               </TableView>
