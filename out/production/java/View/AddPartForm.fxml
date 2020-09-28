@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="366.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AddPartFormController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="366.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox prefHeight="400.0" prefWidth="366.0" style="-fx-padding: 20;">
          <children>
@@ -61,7 +61,7 @@
             <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="326.0" style="-fx-spacing: 20;">
                <children>
                   <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#onSaveBtn" text="Save" />
-                  <Button mnemonicParsing="false" text="Cancel" />
+                  <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#onCancelBtn" text="Cancel" />
                </children>
             </HBox>
          </children>

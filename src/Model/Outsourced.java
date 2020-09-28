@@ -5,10 +5,10 @@ public class Outsourced extends Part{
     String companyName;
 
     /**
-     * Creates an Model.Outsourced Model.Part
-     * @param aId Model.Part ID
-     * @param aName Model.Part name
-     * @param aPrice Model.Part price
+     * Creates an Outsourced Part
+     * @param aId Part ID
+     * @param aName Part name
+     * @param aPrice Part price
      * @param aStock Number of parts in stock
      * @param aMin
      * @param aMax
