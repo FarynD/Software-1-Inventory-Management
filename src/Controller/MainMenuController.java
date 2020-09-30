@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -33,7 +34,7 @@ public class MainMenuController implements Initializable {
     //private ObservableList parts = FXCollections.observableArrayList();
     //private ObservableList products = FXCollections.observableArrayList();
 
-   // @FXML
+    //@FXML
     //private TextField partSearchTxtField;
     //@FXML
     //private TextField productSearchTxtField;
@@ -48,8 +49,7 @@ public class MainMenuController implements Initializable {
     private TableColumn<Part, String> partsNameCol;
     @FXML
     private TableColumn<Part, Integer> partsInventoryCol;
-    @FXML
-    private TableColumn<Part, Double> partsPriceCol;
+
 
     @FXML
     private TableColumn<Product, Integer> productsIdCol;
@@ -57,8 +57,9 @@ public class MainMenuController implements Initializable {
     private TableColumn<Product, String> productsNameCol;
     @FXML
     private TableColumn<Product, Integer> productsInventoryCol;
-    @FXML
-    private TableColumn<Product, Double> productsPriceCol;
+
+
+
 
 
     public MainMenuController(Inventory aInv)
@@ -86,13 +87,13 @@ public class MainMenuController implements Initializable {
         partsIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         partsNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         partsInventoryCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        partsPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        //partsPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
         //costColPart.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         productsIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         productsNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         productsInventoryCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        productsPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        //productsPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         partsTable.refresh();
         productsTable.refresh();
@@ -121,9 +122,7 @@ public class MainMenuController implements Initializable {
         return costCol;
 
     }
-    public void onPartSearchTxtField(ActionEvent actionEvent)
-    {
-    }
+
 
     public void onPartAddBtn(ActionEvent actionEvent)
     {
@@ -151,29 +150,77 @@ public class MainMenuController implements Initializable {
 
     public void onPartModifyBtn(ActionEvent actionEvent)
     {
-        try
+        Part p = partsTable.getSelectionModel().getSelectedItem();
+        if( p == null)
         {
-            Parent root = FXMLLoader.load(getClass().getResource("../View/ModifyPartForm.fxml"));
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Nothing Selected");
+            alert.setHeaderText("Nothing Selected");
+            alert.setContentText("Please select a part to Modify");
 
-            Stage stage = new Stage();
-            stage.setTitle("Add Part");
-            stage.setScene(new Scene(root));
-            stage.show();
+            alert.showAndWait();
         }
-        catch(Exception e)
-        {
-            e.printStackTrace();
+        else {
+            try {
+                ModifyPartFormController controller = new ModifyPartFormController(p, inv);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/ModifyPartForm.fxml"));
+                loader.setController(controller);
+                Parent root = loader.load();
+
+                Stage stage = new Stage();
+                stage.setTitle("Add Part");
+                stage.setScene(new Scene(root));
+                stage.show();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public void onPartDeleteBtn(ActionEvent actionEvent)
     {
+        Part p = partsTable.getSelectionModel().getSelectedItem();
+        if( p == null)
+        {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Nothing Selected");
+            alert.setHeaderText("Nothing Selected");
+            alert.setContentText("Please select a part to Modify");
 
+            alert.showAndWait();
+        }
+        else {
+                try{inv.deletePart(p);} catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
     }
 
 
-    public void onProductSearchTxtField(ActionEvent actionEvent)
+    public void onPartSearchBtn(ActionEvent actionEvent)
     {
+        /*
+        if(inv.lookupPart(partSearchTxtField.getText()).equals(""))
+        {
+
+        }
+        else
+        {
+
+        }
+
+         */
+    }
+
+    private boolean isInt(String s)
+    {
+        return true;
+    }
+
+    public void onProductSearchBtn(ActionEvent actionEvent)
+    {
+
     }
 
     public void onProductAddBtn(ActionEvent actionEvent)
@@ -212,6 +259,21 @@ public class MainMenuController implements Initializable {
 
     public void onProductDeleteBtn(ActionEvent actionEvent)
     {
+        Product p = productsTable.getSelectionModel().getSelectedItem();
+        if( p == null)
+        {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Nothing Selected");
+            alert.setHeaderText("Nothing Selected");
+            alert.setContentText("Please select a part to Modify");
+
+            alert.showAndWait();
+        }
+        else {
+            try{inv.deleteProduct(p);} catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

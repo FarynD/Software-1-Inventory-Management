@@ -1,3 +1,6 @@
+/**
+ * @author Faryn Dumont
+ */
 package Controller;
 
 
@@ -90,26 +93,21 @@ public class AddPartFormController implements Initializable {
                 try
                 {
                     InHouse p = new InHouse(Integer.parseInt(idInput.getText()), nameInput.getText(), Double.parseDouble(priceInput.getText()), Integer.parseInt(invInput.getText()), Integer.parseInt(minInput.getText()), Integer.parseInt(maxInput.getText()), Integer.parseInt(machineIdInput.getText()));
-                }
-                catch (Exception e) { inputErrorMsg();}
-                finally
-                {
-                    InHouse p = new InHouse(Integer.parseInt(idInput.getText()), nameInput.getText(), Double.parseDouble(priceInput.getText()), Integer.parseInt(invInput.getText()), Integer.parseInt(minInput.getText()), Integer.parseInt(maxInput.getText()), Integer.parseInt(machineIdInput.getText()));
                     inv.addPart(p);
                     closeForm();
                 }
+                catch (Exception e) { inputErrorMsg();}
+
+
             } else if (radioGroup.getSelectedToggle() == outsourcedRadio) {
 
                 try
                 {
                     Outsourced p = new Outsourced(Integer.parseInt(idInput.getText()), nameInput.getText(), Double.parseDouble(priceInput.getText()), Integer.parseInt(invInput.getText()), Integer.parseInt(minInput.getText()), Integer.parseInt(maxInput.getText()), machineIdInput.getText());
-                }
-                catch (Exception e) { inputErrorMsg();}
-                finally {
-                    Outsourced p = new Outsourced(Integer.parseInt(idInput.getText()), nameInput.getText(), Double.parseDouble(priceInput.getText()), Integer.parseInt(invInput.getText()), Integer.parseInt(minInput.getText()), Integer.parseInt(maxInput.getText()), machineIdInput.getText());
                     inv.addPart(p);
                     closeForm();
                 }
+                catch (Exception e) { inputErrorMsg();}
             }
         }
     }
@@ -137,7 +135,7 @@ public class AddPartFormController implements Initializable {
      */
     private void inputErrorMsg()
     {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Invalid Input");
         alert.setHeaderText("Invalid Input");
         alert.setContentText("Please make sure the input is in the correct format");
