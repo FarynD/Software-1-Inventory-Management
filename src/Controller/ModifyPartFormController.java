@@ -1,4 +1,5 @@
 /**
+ * Controller Class for the Modify part form
  * @author Faryn Dumont
  */
 package Controller;
@@ -25,6 +26,8 @@ public class ModifyPartFormController implements Initializable {
     Inventory inv;
     int machineId;
     String companyName;
+
+    //FXML data inputs
     @FXML
     private TextField idInput;
     @FXML
@@ -41,6 +44,8 @@ public class ModifyPartFormController implements Initializable {
     private TextField machineIdInput;
     @FXML
     private Label machineCompLabel;
+
+    //FXML Buttons and Radio
     @FXML
     private Button saveBtn;
     @FXML
@@ -50,6 +55,10 @@ public class ModifyPartFormController implements Initializable {
     @FXML
     private ToggleGroup radioGroup;
 
+    /**
+     * AddPartFormController Constructor
+     * @param aInv the Inventory to be used
+     */
     public ModifyPartFormController(Part aPart, Inventory aInv)
     {
         inv = aInv;
@@ -66,6 +75,11 @@ public class ModifyPartFormController implements Initializable {
         }
     }
 
+    /**
+     * Initializes controller, sets the data and toggles the radio
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
@@ -88,14 +102,15 @@ public class ModifyPartFormController implements Initializable {
             machineCompLabel.setText("Company Name");
             radioGroup.selectToggle(outsourcedRadio);
         }
-
-
     }
 
+    //==================================================================
+    //Button and Radio Actions
+    //==================================================================
 
     /**
      * Runs when save button is pressed and saves the new part and exits the form
-     * @param actionEvent
+     * @param actionEvent event captured on button press
      */
     public void onSaveBtn(ActionEvent actionEvent)
     {
@@ -114,14 +129,6 @@ public class ModifyPartFormController implements Initializable {
                 try
                 {
                     InHouse p = new InHouse(Integer.parseInt(idInput.getText()), nameInput.getText(), Double.parseDouble(priceInput.getText()), Integer.parseInt(invInput.getText()), Integer.parseInt(minInput.getText()), Integer.parseInt(maxInput.getText()), Integer.parseInt(machineIdInput.getText()));
-                    /*
-                    part.setId(Integer.parseInt(idInput.getText()));
-                    part.setName(nameInput.getText());
-                    part.setPrice(Double.parseDouble(priceInput.getText()));
-                    part.setStock(Integer.parseInt(invInput.getText()));
-                    part.setMin(Integer.parseInt(minInput.getText()));
-                    part.setMax(Integer.parseInt(maxInput.getText()));
-                     */
                     inv.updatePart(p.getId(), p);
                     closeForm();
                 }
@@ -131,15 +138,6 @@ public class ModifyPartFormController implements Initializable {
                 try
                 {
                     Outsourced p = new Outsourced(Integer.parseInt(idInput.getText()), nameInput.getText(), Double.parseDouble(priceInput.getText()), Integer.parseInt(invInput.getText()), Integer.parseInt(minInput.getText()), Integer.parseInt(maxInput.getText()), machineIdInput.getText());
-                    /*
-                    part.setId(Integer.parseInt(idInput.getText()));
-                    part.setName(nameInput.getText());
-                    part.setPrice(Double.parseDouble(priceInput.getText()));
-                    part.setStock(Integer.parseInt(invInput.getText()));
-                    part.setMin(Integer.parseInt(minInput.getText()));
-                    part.setMax(Integer.parseInt(maxInput.getText()));
-                    //part.setCompanyName(machineIdInput.getText());
-                     */
                     inv.updatePart(p.getId(), p);
                     closeForm();
                 }
@@ -150,12 +148,34 @@ public class ModifyPartFormController implements Initializable {
 
     /**
      * Runs when the cancel button is pressed and exits the form
-     * @param actionEvent
+     * @param actionEvent event captured on button press
      */
     public void onCancelBtn(ActionEvent actionEvent)
     {
         closeForm();
     }
+
+    /**
+     * Runs when the inHouseRadio is pressed and changes the last label to Machine ID
+     * @param actionEvent event captured on radio press
+     */
+    public void onInHouseRadio(ActionEvent actionEvent)
+    {
+        machineCompLabel.setText("Machine ID");
+    }
+
+    /**
+     * runs when the inHouseRadio is pressed and changes the last label to Company Name
+     * @param actionEvent event captured on radio press
+     */
+    public void onOutsourcedRadio(ActionEvent actionEvent)
+    {
+        machineCompLabel.setText("Company Name");
+    }
+
+    //==================================================================
+    //Other methods
+    //==================================================================
 
     /**
      * method to close the form
@@ -177,23 +197,5 @@ public class ModifyPartFormController implements Initializable {
         alert.setContentText("Please make sure the input is in the correct format");
 
         alert.showAndWait();
-    }
-
-    /**
-     * Runs when the inHouseRadio is pressed and changes the last label to Machine ID
-     * @param actionEvent
-     */
-    public void onInHouseRadio(ActionEvent actionEvent)
-    {
-        machineCompLabel.setText("Machine ID");
-    }
-
-    /**
-     * runs when the inHouseRadio is pressed and changes the last label to Company Name
-     * @param actionEvent
-     */
-    public void onOutsourcedRadio(ActionEvent actionEvent)
-    {
-        machineCompLabel.setText("Company Name");
     }
 }

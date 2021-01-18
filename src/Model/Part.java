@@ -3,7 +3,7 @@ package Model; /**
  */
 
 /**
- *
+ * Class for Parts
  * @author Faryn Dumont
  */
 public abstract class Part {

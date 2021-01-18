@@ -1,4 +1,5 @@
 /**
+ * Controller Class for the add part form
  * @author Faryn Dumont
  */
 package Controller;
@@ -22,6 +23,8 @@ import java.util.ResourceBundle;
 public class AddPartFormController implements Initializable {
 
     Inventory inv;
+
+    //FXML data inputs
     @FXML
     private TextField idInput;
     @FXML
@@ -38,6 +41,8 @@ public class AddPartFormController implements Initializable {
     private TextField machineIdInput;
     @FXML
     private Label machineCompLabel;
+
+    //FXML Buttons and Radio
     @FXML
     private Button saveBtn;
     @FXML
@@ -47,11 +52,20 @@ public class AddPartFormController implements Initializable {
     @FXML
     private ToggleGroup radioGroup;
 
+    /**
+     * AddPartFormController Constructor
+     * @param aInv the Inventory to be used
+     */
     public AddPartFormController(Inventory aInv)
     {
         inv = aInv;
     }
 
+    /**
+     * Initializes controller, sets the ID and toggles the radio
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
@@ -59,9 +73,13 @@ public class AddPartFormController implements Initializable {
         radioGroup.selectToggle(inHouseRadio);
     }
 
+    //==================================================================
+    //Button and Radio Actions
+    //==================================================================
+
     /**
      * Runs when save button is pressed and saves the new part and exits the form
-     * @param actionEvent
+     * @param actionEvent event captured on button press
      */
     public void onSaveBtn(ActionEvent actionEvent)
     {
@@ -101,7 +119,7 @@ public class AddPartFormController implements Initializable {
 
     /**
      * Runs when the cancel button is pressed and exits the form
-     * @param actionEvent
+     * @param actionEvent event captured on button press
      */
     public void onCancelBtn(ActionEvent actionEvent)
     {
@@ -110,7 +128,7 @@ public class AddPartFormController implements Initializable {
 
     /**
      * Runs when the inHouseRadio is pressed and changes the last label to Machine ID
-     * @param actionEvent
+     * @param actionEvent event captured on radio press
      */
     public void onInHouseRadio(ActionEvent actionEvent)
     {
@@ -119,12 +137,16 @@ public class AddPartFormController implements Initializable {
 
     /**
      * runs when the inHouseRadio is pressed and changes the last label to Company Name
-     * @param actionEvent
+     * @param actionEvent event captured on radio press
      */
     public void onOutsourcedRadio(ActionEvent actionEvent)
     {
         machineCompLabel.setText("Company Name");
     }
+
+    //==================================================================
+    //Other methods
+    //==================================================================
 
     /**
      * Creates and Sets an unique ID for the new part
