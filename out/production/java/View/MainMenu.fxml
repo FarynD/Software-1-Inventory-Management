@@ -24,7 +24,7 @@
                               <HBox prefHeight="44.0" prefWidth="451.0" style="-fx-padding: 5; -fx-spacing: 15;">
                                  <children>
                                     <Label prefHeight="18.0" prefWidth="131.0" text="Part" />
-                                    <TextField fx:id="partSearchTxtField" prefHeight="26.0" prefWidth="162.0" promptText="Search By Part ID or Name" />
+                                    <TextField fx:id="partSearchInput" prefHeight="26.0" prefWidth="162.0" promptText="Search By Part ID or Name" />
                                     <Button fx:id="partSearchBtn" mnemonicParsing="false" onAction="#onPartSearchBtn" text="Search" />
                                  </children>
                               </HBox>
@@ -58,7 +58,7 @@
                               <HBox prefHeight="44.0" prefWidth="451.0" style="-fx-padding: 5; -fx-spacing: 15;">
                                  <children>
                                     <Label prefHeight="18.0" prefWidth="129.0" text="Product" />
-                                    <TextField fx:id="productSearchTxtField" prefHeight="26.0" prefWidth="162.0" promptText="Search By Product ID or Name" />
+                                    <TextField fx:id="productSearchInput" prefHeight="26.0" prefWidth="162.0" promptText="Search By Product ID or Name" />
                                     <Button fx:id="productSearchBtn" mnemonicParsing="false" onAction="#onProductSearchBtn" text="Search" />
                                  </children>
                               </HBox>
