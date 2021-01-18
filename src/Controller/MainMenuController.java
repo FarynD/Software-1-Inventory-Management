@@ -49,6 +49,8 @@ public class MainMenuController implements Initializable {
     private TableColumn<Part, String> partsNameCol;
     @FXML
     private TableColumn<Part, Integer> partsInventoryCol;
+    @FXML
+    private TableColumn<Part, Double> partsPriceCol;
 
 
     @FXML
@@ -57,10 +59,8 @@ public class MainMenuController implements Initializable {
     private TableColumn<Product, String> productsNameCol;
     @FXML
     private TableColumn<Product, Integer> productsInventoryCol;
-
-
-
-
+    @FXML
+    private TableColumn<Product, Double> productsPriceCol;
 
     public MainMenuController(Inventory aInv)
     {
@@ -75,30 +75,21 @@ public class MainMenuController implements Initializable {
     }
     private void createTables()
     {
-        TableColumn<Part, Double> costColPart = formatPrice();
-        TableColumn<Product, Double> costColProd = formatPrice();
-
-
-        partsTable.getColumns().addAll(costColPart);
-        productsTable.getColumns().addAll(costColProd);
-
         partsTable.setItems(inv.getAllParts());
         productsTable.setItems(inv.getAllProducts());
 
         partsIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         partsNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         partsInventoryCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        //partsPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-        //costColPart.setCellValueFactory(new PropertyValueFactory<>("price"));
+        partsPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         productsIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         productsNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         productsInventoryCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        //productsPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        productsPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         partsTable.refresh();
         productsTable.refresh();
-
     }
 
     private <T> TableColumn<T, Double> formatPrice()
@@ -123,8 +114,7 @@ public class MainMenuController implements Initializable {
         return costCol;
 
     }
-
-
+    
     public void onPartAddBtn(ActionEvent actionEvent)
     {
         try
