@@ -1,3 +1,7 @@
+/**
+ * Main class for the application
+ * @author Faryn Dumont
+ */
 package MainInventoryManagement;
 
 import Model.*;

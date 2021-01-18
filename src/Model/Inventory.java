@@ -1,3 +1,7 @@
+/**
+ * Class for Inventory
+ * @author Faryn Dumont
+ */
 package Model;
 
 import javafx.collections.FXCollections;

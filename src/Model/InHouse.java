@@ -1,3 +1,7 @@
+/**
+ * Class for InHouse parts
+ * @author Faryn Dumont
+ */
 package Model;
 
 public class InHouse extends Part{

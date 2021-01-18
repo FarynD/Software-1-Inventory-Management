@@ -1,3 +1,7 @@
+/**
+ * Class for products
+ * @author Faryn Dumont
+ */
 package Model;
 
 import javafx.collections.FXCollections;
@@ -34,93 +38,93 @@ public class Product {
 
     /**
      * Sets the ID for the product
-     * @param aId
+     * @param aId int identification number for the product
      */
     public void setID(int aId){id = aId;}
 
     /**
      * Sets the name for the product
-     * @param aName
+     * @param aName name for the product
      */
     public void setName(String aName){name = aName;}
 
     /**
      * Sets the price for the product
-     * @param aPrice
+     * @param aPrice price for the product
      */
     public void setPrice(double aPrice){price = aPrice;}
 
     /**
      * Sets the stock of the product
-     * @param aStock
+     * @param aStock how much stock is there of product
      */
     public void setStock(int aStock){stock = aStock;}
 
     /**
-     *
+     * Sets the minimum amount of stock for the product
      * @param aMin
      */
     public void setMin(int aMin){min = aMin;}
 
     /**
-     *
+     * Sets the maximum amount of stock for the product
      * @param aMax
      */
     public void setMax(int aMax){max = aMax;}
 
 
     /**
-     *
-     * @return
+     * returns the products id
+     * @return products id
      */
     public int getId(){return id;}
 
     /**
-     *
-     * @return
+     * returns the game of the product
+     * @return product name
      */
     public String getName(){return name;}
 
     /**
-     *
-     * @return
+     * returns the products price
+     * @return products price
      */
     public double getPrice(){return price;}
 
     /**
-     *
-     * @return
+     * returns the number of stock of the product
+     * @return products stock
      */
     public int getStock(){return stock;}
 
     /**
-     *
-     * @return
+     * returns the minimum amount of stock of the product
+     * @return the minimum amount of stock
      */
     public int getMin(){return min;}
 
     /**
-     *
-     * @return
+     * returns the maximum amount of stock of the product
+     * @return the maximum amount of stock
      */
     public int getMax(){return max;}
 
     /**
-     *
-     * @param aAssociatedPart
+     * Adds new associated parts
+     * @param aAssociatedPart parts the product uses
      */
     public void addAssociatedPart(Part aAssociatedPart){associatedParts.add(aAssociatedPart);}
 
     /**
-     *
-     * @param selectedAssociatedPart
+     * gets rid of the selected part in the associated parts list
+     * @param selectedAssociatedPart the part to be deleted
      * @return
      */
     public boolean deleteAssociatedPart(Part selectedAssociatedPart){return associatedParts.remove(selectedAssociatedPart);}
 
     /**
-     *
-     * @return
+     * returns all associated parts
+     * @return all associated parts
      */
     public ObservableList<Part> getAllAssociatedParts(){return associatedParts;}
 

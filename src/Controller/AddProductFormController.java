@@ -1,3 +1,7 @@
+/**
+ * Controller Class for the add product form
+ * @author Faryn Dumont
+ */
 package Controller;
 
 import javafx.collections.FXCollections;
@@ -20,6 +24,7 @@ public class AddProductFormController implements Initializable {
     ObservableList<Part> associatedParts;
     ObservableList<Part> searchList;
 
+    //FXML data inputs
     @FXML
     private TextField idInput;
     @FXML
@@ -35,11 +40,13 @@ public class AddProductFormController implements Initializable {
     @FXML
     private TextField searchInput;
 
+    //FXML Tables
     @FXML
     private TableView<Part> allPartsTbl;
     @FXML
-    private TableView<Part> chosenPartsTbl;
+    private TableView<Part> associatedPartsTbl;
 
+    //FXML all parts table columns
     @FXML
     private TableColumn<Part, Integer> allPartIDCol;
     @FXML
@@ -49,24 +56,34 @@ public class AddProductFormController implements Initializable {
     @FXML
     private TableColumn<Part, Double> allPriceCol;
 
+    //FXML associated parts table columns
     @FXML
-    private TableColumn<Part, Integer> chosenPartIDCol;
+    private TableColumn<Part, Integer> associatedPartIDCol;
     @FXML
-    private TableColumn<Part, String> chosenPartNameCol;
+    private TableColumn<Part, String> associatedPartNameCol;
     @FXML
-    private TableColumn<Part, Integer> chosenInvCol;
+    private TableColumn<Part, Integer> associatedInvCol;
     @FXML
-    private TableColumn<Part, Double> chosenPriceCol;
+    private TableColumn<Part, Double> associatedPriceCol;
 
+    //FXML buttons
     @FXML
     private Button saveBtn;
 
-
+    /**
+     * AddProductFormController Constructor
+     * @param aInv the Inventory to be used
+     */
     public AddProductFormController(Inventory aInv)
     {
         inv = aInv;
     }
 
+    /**
+     * Initializes controller, sets the ID, initializes associatedParts and searchList, and populates tables
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
@@ -76,9 +93,13 @@ public class AddProductFormController implements Initializable {
         createTables();
     }
 
+    //==================================================================
+    //Button Actions
+    //==================================================================
+
     /**
-     * Calls search method
-     * @param actionEvent
+     * Runs when the search button is pressed and calls the search method
+     * @param actionEvent event captured on button press
      */
     public void onSearchBtn(ActionEvent actionEvent)
     {
@@ -86,19 +107,15 @@ public class AddProductFormController implements Initializable {
     }
 
     /**
-     * Adds selected part from allParts Table to associated parts
-     * @param actionEvent
+     * Runs when the add part button is pressed  and adds selected part from allParts Table to associated parts
+     * @param actionEvent event captured on button press
      */
     public void onAddPartBtn(ActionEvent actionEvent)
     {
         Part p = allPartsTbl.getSelectionModel().getSelectedItem();
         if( p == null)
         {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Nothing Selected");
-            alert.setHeaderText("Nothing Selected");
-            alert.setContentText("Please select a part to Modify");
-            alert.showAndWait();
+            nothingSelectedErrorMsg();
             return;
         }
         associatedParts.add(p);
@@ -106,12 +123,12 @@ public class AddProductFormController implements Initializable {
     }
 
     /**
-     * Removes selected part from chosenParts Table
-     * @param actionEvent
+     * Runs whe the remove part button is pressed and removes selected part from associatedParts Table
+     * @param actionEvent event captured on button press
      */
     public void onRemovePartBtn(ActionEvent actionEvent)
     {
-        Part p = chosenPartsTbl.getSelectionModel().getSelectedItem();
+        Part p = associatedPartsTbl.getSelectionModel().getSelectedItem();
         if( p == null)
         {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -124,6 +141,10 @@ public class AddProductFormController implements Initializable {
         associatedParts.remove(p);
     }
 
+    /**
+     * Runs when save button is pressed and saves the new product and exits the form
+     * @param actionEvent event captured on button press
+     */
     public void onSaveBtn(ActionEvent actionEvent)
     {
         try{
@@ -163,9 +184,13 @@ public class AddProductFormController implements Initializable {
 
     /**
      * Runs when the cancel button is pressed and exits the form
-     * @param actionEvent
+     * @param actionEvent event captured on button press
      */
     public void onCancelBtn(ActionEvent actionEvent){closeForm();}
+
+    //==================================================================
+    //Other methods
+    //==================================================================
 
     /**
      * Creates and Sets an unique ID for the new Product
@@ -181,7 +206,7 @@ public class AddProductFormController implements Initializable {
     }
 
     /**
-     * Method to close the Form
+     * Closes the form
      */
     private void closeForm()
     {
@@ -201,35 +226,12 @@ public class AddProductFormController implements Initializable {
         allPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
         allPartsTbl.refresh();
 
-        chosenPartsTbl.setItems(associatedParts);
-        chosenPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        chosenPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        chosenInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        chosenPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-        chosenPartsTbl.refresh();
-    }
-
-    /**
-     * Displays an error message for searching with an empty search bar
-     */
-    private void emptySearchErrorMsg()
-    {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Part Not Found");
-        alert.setHeaderText("Part Not Found");
-        alert.setContentText("There is no part with this name or ID");
-
-        alert.showAndWait();
-    }
-
-    private void inputErrorMsg()
-    {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Invalid Input");
-        alert.setHeaderText("Invalid Input");
-        alert.setContentText("Please make sure the input is in the correct format");
-
-        alert.showAndWait();
+        associatedPartsTbl.setItems(associatedParts);
+        associatedPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        associatedPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        associatedInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        associatedPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        associatedPartsTbl.refresh();
     }
 
     /**
@@ -263,5 +265,48 @@ public class AddProductFormController implements Initializable {
         allInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         allPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
         allPartsTbl.refresh();
+    }
+
+
+    //==================================================================
+    //Error Message Methods
+    //==================================================================
+
+    /**
+     * Displays an error message for searching with an empty search bar
+     */
+    private void emptySearchErrorMsg()
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Part Not Found");
+        alert.setHeaderText("Part Not Found");
+        alert.setContentText("There is no part with this name or ID");
+
+        alert.showAndWait();
+    }
+
+    /**
+     * Displays an error message for incorrect input
+     */
+    private void inputErrorMsg()
+    {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Invalid Input");
+        alert.setHeaderText("Invalid Input");
+        alert.setContentText("Please make sure the input is in the correct format");
+
+        alert.showAndWait();
+    }
+
+    /**
+     * Displays an error message for empty selection
+     */
+    private void nothingSelectedErrorMsg()
+    {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Nothing Selected");
+        alert.setHeaderText("Nothing Selected");
+        alert.setContentText("Please select a part to Modify");
+        alert.showAndWait();
     }
 }

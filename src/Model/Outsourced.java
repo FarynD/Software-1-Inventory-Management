@@ -1,3 +1,7 @@
+/**
+ * Class for Outsourced parts
+ * @author Faryn Dumont
+ */
 package Model;
 
 public class Outsourced extends Part{

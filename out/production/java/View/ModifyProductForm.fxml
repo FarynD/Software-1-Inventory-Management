@@ -78,10 +78,10 @@
                   <Button fx:id="addPartBtn" mnemonicParsing="false" onAction="#onAddPartBtn" text="Add" />
                   <TableView fx:id="chosenPartsTbl" prefHeight="200.0" prefWidth="390.0">
                      <columns>
-                        <TableColumn fx:id="chosenPartIDCol" prefWidth="75.0" text="Part ID" />
-                        <TableColumn fx:id="chosenPartNameCol" prefWidth="75.0" text="Part Name" />
-                        <TableColumn fx:id="chosenInvCol" prefWidth="107.20001220703125" text="Inventory Level" />
-                        <TableColumn fx:id="chosenPriceCol" prefWidth="123.19998779296873" text="Price/Cost per Unit" />
+                        <TableColumn fx:id="associatedPartIDCol" prefWidth="75.0" text="Part ID" />
+                        <TableColumn fx:id="associatedPartNameCol" prefWidth="75.0" text="Part Name" />
+                        <TableColumn fx:id="associatedInvCol" prefWidth="107.20001220703125" text="Inventory Level" />
+                        <TableColumn fx:id="associatedPriceCol" prefWidth="123.19998779296873" text="Price/Cost per Unit" />
                      </columns>
                   </TableView>
                   <Button fx:id="removePartBtn" mnemonicParsing="false" onAction="#onRemovePartBtn" text="Remove Associated Part" />
