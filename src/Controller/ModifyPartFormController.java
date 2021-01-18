@@ -88,7 +88,7 @@ public class ModifyPartFormController implements Initializable {
         invInput.setText(Integer.toString(part.getStock()));
         priceInput.setText(Double.toString(part.getPrice()));
         maxInput.setText(Integer.toString(part.getMax()));
-        minInput.setText(Integer.toString(part.getMax()));
+        minInput.setText(Integer.toString(part.getMin()));
 
         if(part.getClass() == InHouse.class)
         {

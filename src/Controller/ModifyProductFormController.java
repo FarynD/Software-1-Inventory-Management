@@ -19,6 +19,7 @@ public class ModifyProductFormController implements Initializable {
     Inventory inv;
     Product prod;
     ObservableList<Part> searchList;
+    Product tempProd;
 
     //FXML data inputs
     @FXML
@@ -73,6 +74,11 @@ public class ModifyProductFormController implements Initializable {
     public ModifyProductFormController(Inventory aInv, Product aProduct)
     {
         prod = aProduct;
+        tempProd = new Product(prod.getId(),prod.getName(), prod.getPrice(),prod.getStock(),prod.getMin(), prod.getMax());
+        for(int x = 0; x < prod.getAllAssociatedParts().size(); x++)
+        {
+            tempProd.addAssociatedPart(prod.getAllAssociatedParts().get(x));
+        }
         inv = aInv;
     }
 
@@ -117,14 +123,10 @@ public class ModifyProductFormController implements Initializable {
         Part p = allPartsTbl.getSelectionModel().getSelectedItem();
         if( p == null)
         {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Nothing Selected");
-            alert.setHeaderText("Nothing Selected");
-            alert.setContentText("Please select a part to Modify");
-            alert.showAndWait();
+            nothingSelectedErrorMsg();
             return;
         }
-        prod.addAssociatedPart(p);
+        tempProd.addAssociatedPart(p);
         createTables();
     }
 
@@ -137,14 +139,10 @@ public class ModifyProductFormController implements Initializable {
         Part p = associatedPartsTbl.getSelectionModel().getSelectedItem();
         if( p == null)
         {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Nothing Selected");
-            alert.setHeaderText("Nothing Selected");
-            alert.setContentText("Please select a part to Modify");
-            alert.showAndWait();
+            nothingSelectedErrorMsg();
             return;
         }
-        prod.deleteAssociatedPart(p);
+        tempProd.deleteAssociatedPart(p);
     }
 
     /**
@@ -155,9 +153,9 @@ public class ModifyProductFormController implements Initializable {
     {
         try{
             double totalPrice = 0;
-            for(int x = 0; x < prod.getAllAssociatedParts().size(); x++)
+            for(int x = 0; x < tempProd.getAllAssociatedParts().size(); x++)
             {
-                totalPrice += prod.getAllAssociatedParts().get(x).getPrice();
+                totalPrice += tempProd.getAllAssociatedParts().get(x).getPrice();
             }
             if (idInput.getText().isBlank() || nameInput.getText().isBlank() || invInput.getText().isBlank() || priceInput.getText().isBlank() || maxInput.getText().isBlank() || minInput.getText().isBlank())
             {
@@ -173,15 +171,16 @@ public class ModifyProductFormController implements Initializable {
                 nothingSelectedErrorMsg();
                 return;
             }
-                    prod.setID(Integer.parseInt(idInput.getText()));
-                    prod.setName(nameInput.getText());
-                    prod.setPrice(Double.parseDouble(priceInput.getText()));
-                    prod.setStock(Integer.parseInt(invInput.getText()));
-                    prod.setMax( Integer.parseInt(maxInput.getText()));
-                    prod.setMin(Integer.parseInt(minInput.getText()));
-                    inv.deleteProduct(prod);
-                    inv.addProduct(prod);
-                    closeForm();
+            tempProd.setID(Integer.parseInt(idInput.getText()));
+            tempProd.setName(nameInput.getText());
+            tempProd.setPrice(Double.parseDouble(priceInput.getText()));
+            tempProd.setStock(Integer.parseInt(invInput.getText()));
+            tempProd.setMax( Integer.parseInt(maxInput.getText()));
+            tempProd.setMin(Integer.parseInt(minInput.getText()));
+
+            inv.deleteProduct(prod);
+            inv.addProduct(tempProd);
+            closeForm();
 
         } catch(Exception e){inputErrorMsg();}
 
@@ -218,7 +217,7 @@ public class ModifyProductFormController implements Initializable {
         allPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
         allPartsTbl.refresh();
 
-        associatedPartsTbl.setItems(prod.getAllAssociatedParts());
+        associatedPartsTbl.setItems(tempProd.getAllAssociatedParts());
         associatedPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         associatedPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         associatedInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
