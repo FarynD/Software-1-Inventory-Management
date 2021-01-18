@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -40,12 +41,12 @@
                         <Label alignment="CENTER" prefHeight="18.0" prefWidth="66.0" text="Inv" GridPane.rowIndex="2" />
                         <Label alignment="CENTER" prefHeight="18.0" prefWidth="63.0" text="Price" GridPane.rowIndex="3" />
                         <Label alignment="CENTER" prefHeight="18.0" prefWidth="62.0" text="Max" GridPane.rowIndex="4" />
-                        <TextField disable="true" prefHeight="26.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.columnSpan="2" />
-                        <TextField GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextField GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                        <TextField fx:id="idInput" disable="true" prefHeight="26.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.columnSpan="2" />
+                        <TextField fx:id="nameInput" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="invInput" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="priceInput" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="maxInput" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="minInput" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                         <Label alignment="CENTER" prefHeight="18.0" prefWidth="60.0" text="Min" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
@@ -56,31 +57,35 @@
                <children>
                   <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="266.0">
                      <children>
-                        <TextField alignment="CENTER" prefHeight="26.0" prefWidth="167.0" promptText="Search by Part ID or Name" />
+                        <TextField fx:id="searchInput" alignment="CENTER" prefHeight="26.0" prefWidth="167.0" promptText="Search by Part ID or Name">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin></TextField>
+                        <Button fx:id="seachBtn" mnemonicParsing="false" onAction="#onSearchBtn" text="Search" />
                      </children>
                   </HBox>
-                  <TableView prefHeight="200.0" prefWidth="390.0">
+                  <TableView fx:id="allPartsTbl" prefHeight="200.0" prefWidth="390.0">
                      <columns>
-                        <TableColumn prefWidth="75.0" text="Part ID" />
-                        <TableColumn prefWidth="75.0" text="Part Name" />
-                        <TableColumn prefWidth="107.20001220703125" text="Inventory Level" />
-                        <TableColumn prefWidth="123.19998779296873" text="Price/Cost per Unit" />
+                        <TableColumn fx:id="allPartIDCol" prefWidth="75.0" text="Part ID" />
+                        <TableColumn fx:id="allPartNameCol" prefWidth="75.0" text="Part Name" />
+                        <TableColumn fx:id="allInvCol" prefWidth="107.20001220703125" text="Inventory Level" />
+                        <TableColumn fx:id="allPriceCol" prefWidth="123.19998779296873" text="Price/Cost per Unit" />
                      </columns>
                   </TableView>
-                  <Button mnemonicParsing="false" text="Add" />
-                  <TableView prefHeight="200.0" prefWidth="390.0">
+                  <Button fx:id="addPartBtn" mnemonicParsing="false" onAction="#onAddPartBtn" text="Add" />
+                  <TableView fx:id="chosenPartsTbl" prefHeight="200.0" prefWidth="390.0">
                      <columns>
-                        <TableColumn prefWidth="75.0" text="Part ID" />
-                        <TableColumn prefWidth="75.0" text="Part Name" />
-                        <TableColumn prefWidth="107.20001220703125" text="Inventory Level" />
-                        <TableColumn prefWidth="123.19998779296873" text="Price/Cost per Unit" />
+                        <TableColumn fx:id="chosenPartIDCol" prefWidth="75.0" text="Part ID" />
+                        <TableColumn fx:id="chosenPartNameCol" prefWidth="75.0" text="Part Name" />
+                        <TableColumn fx:id="chosenInvCol" prefWidth="107.20001220703125" text="Inventory Level" />
+                        <TableColumn fx:id="chosenPriceCol" prefWidth="123.19998779296873" text="Price/Cost per Unit" />
                      </columns>
                   </TableView>
-                  <Button mnemonicParsing="false" text="Remove Associated Part" />
+                  <Button fx:id="removePartBtn" mnemonicParsing="false" onAction="#onRemovePartBtn" text="Remove Associated Part" />
                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 51;">
                      <children>
-                        <Button mnemonicParsing="false" text="Save" />
-                        <Button mnemonicParsing="false" text="Cancel" />
+                        <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#onSaveBtn" text="Save" />
+                        <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#onCancelBtn" text="Cancel" />
                      </children>
                   </HBox>
                </children>

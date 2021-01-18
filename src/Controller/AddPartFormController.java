@@ -60,19 +60,6 @@ public class AddPartFormController implements Initializable {
     }
 
     /**
-     * Creates and Sets an unique ID for the new part
-     * @param allParts list of all parts already created
-     */
-    public void setID(ObservableList<Part> allParts)
-    {
-        int ID = 0;
-        if(allParts.size() > 0) {
-            while (ID < allParts.size() && ID == allParts.get(ID).getId()) {ID++;}
-        }
-        idInput.setText(Integer.toString(ID));
-    }
-
-    /**
      * Runs when save button is pressed and saves the new part and exits the form
      * @param actionEvent
      */
@@ -122,6 +109,37 @@ public class AddPartFormController implements Initializable {
     }
 
     /**
+     * Runs when the inHouseRadio is pressed and changes the last label to Machine ID
+     * @param actionEvent
+     */
+    public void onInHouseRadio(ActionEvent actionEvent)
+    {
+        machineCompLabel.setText("Machine ID");
+    }
+
+    /**
+     * runs when the inHouseRadio is pressed and changes the last label to Company Name
+     * @param actionEvent
+     */
+    public void onOutsourcedRadio(ActionEvent actionEvent)
+    {
+        machineCompLabel.setText("Company Name");
+    }
+
+    /**
+     * Creates and Sets an unique ID for the new part
+     * @param allParts list of all parts already created
+     */
+    public void setID(ObservableList<Part> allParts)
+    {
+        int ID = 0;
+        if(allParts.size() > 0) {
+            while (ID < allParts.size() && ID == allParts.get(ID).getId()) {ID++;}
+        }
+        idInput.setText(Integer.toString(ID));
+    }
+
+    /**
      * method to close the form
      */
     private void closeForm()
@@ -141,23 +159,5 @@ public class AddPartFormController implements Initializable {
         alert.setContentText("Please make sure the input is in the correct format");
 
         alert.showAndWait();
-    }
-
-    /**
-     * Runs when the inHouseRadio is pressed and changes the last label to Machine ID
-     * @param actionEvent
-     */
-    public void onInHouseRadio(ActionEvent actionEvent)
-    {
-        machineCompLabel.setText("Machine ID");
-    }
-
-    /**
-     * runs when the inHouseRadio is pressed and changes the last label to Company Name
-     * @param actionEvent
-     */
-    public void onOutsourcedRadio(ActionEvent actionEvent)
-    {
-        machineCompLabel.setText("Company Name");
     }
 }
