@@ -2,6 +2,8 @@ package MainInventoryManagement;
 
 import Model.*;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -62,6 +64,9 @@ public class MainMenu extends Application {
         prod2.addAssociatedPart(part3);
         prod3.addAssociatedPart(part3);
         prod3.addAssociatedPart(part5);
+
+
+
 
         inv.addProduct(prod1);
         inv.addProduct(prod2);

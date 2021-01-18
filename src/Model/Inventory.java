@@ -24,7 +24,7 @@ public class Inventory {
     /**
      * Looks up a part from is unique ID.
      * @param partId the parts unique ID.
-     * @return the part associated with the ID given.
+     * @return the parts associated with the ID given.
      */
     public Part lookupPart(int partId)
     {

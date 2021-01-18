@@ -70,6 +70,7 @@ public class MainMenuController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
+        ObservableList<Part> test= inv.getAllProducts().get(0).getAllAssociatedParts();
         createTables();
     }
     private void createTables()
@@ -132,9 +133,6 @@ public class MainMenuController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/AddPartForm.fxml"));
             loader.setController(controller);
             Parent root = loader.load();
-
-
-
 
             Stage stage = new Stage();
             stage.setTitle("Add Part");
@@ -227,10 +225,21 @@ public class MainMenuController implements Initializable {
     {
         try
         {
+            /*
             Parent root = FXMLLoader.load(getClass().getResource("../View/AddProductForm.fxml"));
 
             Stage stage = new Stage();
             stage.setTitle("Add Part");
+            stage.setScene(new Scene(root));
+            stage.show();
+             */
+            AddProductFormController controller = new AddProductFormController(inv);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/AddProductForm.fxml"));
+            loader.setController(controller);
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Add Product");
             stage.setScene(new Scene(root));
             stage.show();
         }
@@ -242,12 +251,26 @@ public class MainMenuController implements Initializable {
 
     public void onProductModifyBtn(ActionEvent actionEvent)
     {
+        Product p = productsTable.getSelectionModel().getSelectedItem();
+        if( p == null)
+        {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Nothing Selected");
+            alert.setHeaderText("Nothing Selected");
+            alert.setContentText("Please select a part to Modify");
+
+            alert.showAndWait();
+            return;
+        }
         try
         {
-            Parent root = FXMLLoader.load(getClass().getResource("../View/ModifyProductForm.fxml"));
+            ModifyProductFormController controller = new ModifyProductFormController(inv, p );
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/AddProductForm.fxml"));
+            loader.setController(controller);
+            Parent root = loader.load();
 
             Stage stage = new Stage();
-            stage.setTitle("Add Part");
+            stage.setTitle("Modify Product");
             stage.setScene(new Scene(root));
             stage.show();
         }
