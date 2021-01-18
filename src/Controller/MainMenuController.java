@@ -1,23 +1,21 @@
 package Controller;
 
-import Model.Inventory;
-import Model.Part;
-import Model.Product;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import Model.*;
 import javafx.event.ActionEvent;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableView;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
-import javax.swing.*;
+
 //import javax.swing.table.TableColumn;
 
 
@@ -33,11 +31,9 @@ public class MainMenuController implements Initializable {
     private Inventory inv;
     //private ObservableList parts = FXCollections.observableArrayList();
     //private ObservableList products = FXCollections.observableArrayList();
+    private ObservableList<Part> partSearchList;
+    private ObservableList<Product> productSearchList;
 
-    //@FXML
-    //private TextField partSearchTxtField;
-    //@FXML
-    //private TextField productSearchTxtField;
     @FXML
     private TableView<Part> partsTable;
     @FXML
@@ -62,6 +58,12 @@ public class MainMenuController implements Initializable {
     @FXML
     private TableColumn<Product, Double> productsPriceCol;
 
+    @FXML
+    private TextField partSearchInput;
+    @FXML
+    private TextField productSearchInput;
+
+
     public MainMenuController(Inventory aInv)
     {
         inv = aInv;
@@ -71,50 +73,11 @@ public class MainMenuController implements Initializable {
     public void initialize(URL location, ResourceBundle resources)
     {
         ObservableList<Part> test= inv.getAllProducts().get(0).getAllAssociatedParts();
+        partSearchList = FXCollections.observableArrayList();
+        productSearchList = FXCollections.observableArrayList();
         createTables();
     }
-    private void createTables()
-    {
-        partsTable.setItems(inv.getAllParts());
-        productsTable.setItems(inv.getAllProducts());
 
-        partsIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        partsNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        partsInventoryCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        partsPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-        productsIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        productsNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        productsInventoryCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        productsPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-        partsTable.refresh();
-        productsTable.refresh();
-    }
-
-    private <T> TableColumn<T, Double> formatPrice()
-    {
-        TableColumn<T, Double> costCol = new TableColumn("price");
-        costCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-        costCol.setCellFactory((TableColumn<T, Double> column) ->
-        {
-            return new TableCell<T, Double>()
-            {
-                @Override
-                protected void updateItem(Double item, boolean empty)
-                {
-                    if(!empty)
-                    {
-                        setText("$" + String.format("%10.2f", item));
-                    }
-                }
-            };
-        });
-        return costCol;
-
-    }
-    
     public void onPartAddBtn(ActionEvent actionEvent)
     {
         try
@@ -188,27 +151,62 @@ public class MainMenuController implements Initializable {
 
     public void onPartSearchBtn(ActionEvent actionEvent)
     {
-        /*
-        if(inv.lookupPart(partSearchTxtField.getText()).equals(""))
+        if(partSearchInput.getText().isEmpty())
         {
-
+            createTables();
+            return;
         }
-        else
+        partSearchList.clear();
+        try
         {
-
+            partSearchList.add(inv.lookupPart(Integer.parseInt(partSearchInput.getText())));
         }
-
-         */
+        catch(Exception e)
+        {
+            partSearchList = inv.lookupPart(partSearchInput.getText());
+            if (partSearchList.isEmpty())
+            {
+                emptySearchErrorMsg();
+                return;
+            }
+        }
+        partsTable.setItems(partSearchList);
+        partsIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        partsNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        partsInventoryCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        partsPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        partsTable.refresh();
     }
 
-    private boolean isInt(String s)
-    {
-        return true;
-    }
+
 
     public void onProductSearchBtn(ActionEvent actionEvent)
     {
-
+        if(productSearchInput.getText().isEmpty())
+        {
+            createTables();
+            return;
+        }
+        productSearchList.clear();
+        try
+        {
+            productSearchList.add(inv.lookupProduct(Integer.parseInt(productSearchInput.getText())));
+        }
+        catch(Exception e)
+        {
+            productSearchList = inv.lookupProduct(productSearchInput.getText());
+            if (productSearchList.isEmpty())
+            {
+                emptySearchErrorMsg();
+                return;
+            }
+        }
+        productsTable.setItems(productSearchList);
+        productsIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        productsNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        productsInventoryCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        productsPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        productsTable.refresh();
     }
 
     public void onProductAddBtn(ActionEvent actionEvent)
@@ -289,5 +287,59 @@ public class MainMenuController implements Initializable {
         }
     }
 
+    private void createTables()
+    {
+        partsTable.setItems(inv.getAllParts());
+        productsTable.setItems(inv.getAllProducts());
+
+        partsIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        partsNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        partsInventoryCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        partsPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        productsIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        productsNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        productsInventoryCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        productsPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        partsTable.refresh();
+        productsTable.refresh();
+    }
+    private <T> TableColumn<T, Double> formatPrice()
+    {
+        TableColumn<T, Double> costCol = new TableColumn("price");
+        costCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        costCol.setCellFactory((TableColumn<T, Double> column) ->
+        {
+            return new TableCell<T, Double>()
+            {
+                @Override
+                protected void updateItem(Double item, boolean empty)
+                {
+                    if(!empty)
+                    {
+                        setText("$" + String.format("%10.2f", item));
+                    }
+                }
+            };
+        });
+        return costCol;
+
+    }
+    private boolean isInt(String s)
+    {
+        return true;
+    }
+
+    private void emptySearchErrorMsg()
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Part Not Found");
+        alert.setHeaderText("Part Not Found");
+        alert.setContentText("There is no part with this name or ID");
+
+        alert.showAndWait();
+    }
 
 }
