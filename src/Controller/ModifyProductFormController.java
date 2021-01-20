@@ -90,7 +90,6 @@ public class ModifyProductFormController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-
         searchList  = FXCollections.observableArrayList();
         idInput.setText(Integer.toString(prod.getId()));
         nameInput.setText(prod.getName());

@@ -41,14 +41,14 @@ public class Inventory {
     /**
      * Looks up a part from its name.
      * @param partName the name of the part being searched for.
-     * @return a list of all parts with that name.
+     * @return a list of all parts that that name is a part of.
      */
     public ObservableList<Part> lookupPart(String partName)
     {
         ObservableList<Part> partList = FXCollections.observableArrayList();
         for(int x = 0; x<allParts.size();x++)
         {
-            if(allParts.get(x).getName().equals(partName))
+            if(allParts.get(x).getName().contains(partName))
             {
                 partList.add(allParts.get(x));
             }
@@ -72,14 +72,14 @@ public class Inventory {
     /**
      * Looks up a product from its name.
      * @param productName the name of the product being searched for.
-     * @return a list of all parts with that name.
+     * @return a list of all products that that name is a part of.
      */
     public ObservableList<Product> lookupProduct(String productName)
     {
         ObservableList<Product> productList = FXCollections.observableArrayList();
         for(int x = 0; x < allProducts.size(); x++)
         {
-            if(allProducts.get(x).getName().equals(productName))
+            if(allProducts.get(x).getName().contains(productName))
             {
                 productList.add(allProducts.get(x));
             }

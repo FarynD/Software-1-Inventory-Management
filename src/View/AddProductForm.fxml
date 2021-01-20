@@ -57,7 +57,7 @@
                <children>
                   <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="266.0">
                      <children>
-                        <TextField fx:id="searchInput" alignment="CENTER" prefHeight="26.0" prefWidth="167.0" promptText="Search by Part ID or Name">
+                        <TextField fx:id="searchInput" prefHeight="26.0" prefWidth="167.0" promptText="Search by Part ID or Name">
                            <HBox.margin>
                               <Insets right="20.0" />
                            </HBox.margin></TextField>
