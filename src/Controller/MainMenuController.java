@@ -12,6 +12,7 @@ import Model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -66,6 +67,10 @@ public class MainMenuController implements Initializable {
     private TextField partSearchInput;
     @FXML
     private TextField productSearchInput;
+
+    //FXML buttons
+    @FXML
+    private Button exitBtn;
 
 
     /**
@@ -138,7 +143,7 @@ public class MainMenuController implements Initializable {
             Parent root = loader.load();
 
             Stage stage = new Stage();
-            stage.setTitle("Add Part");
+            stage.setTitle("Modify Part");
             stage.setScene(new Scene(root));
             stage.show();
 
@@ -190,14 +195,9 @@ public class MainMenuController implements Initializable {
         Part p = partsTable.getSelectionModel().getSelectedItem();
         if( p == null)
         {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Nothing Selected");
-            alert.setHeaderText("Nothing Selected");
-            alert.setContentText("Please select a part to Modify");
-
-            alert.showAndWait();
+            nothingSelectedErrorMsg();
         }
-        else {
+        else if(confirmDelete(p.getName())) {
                 try{inv.deletePart(p);} catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -312,18 +312,30 @@ public class MainMenuController implements Initializable {
         Product p = productsTable.getSelectionModel().getSelectedItem();
         if( p == null)
         {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Nothing Selected");
-            alert.setHeaderText("Nothing Selected");
-            alert.setContentText("Please select a part to Modify");
-
-            alert.showAndWait();
+            nothingSelectedErrorMsg();
         }
-        else {
+        else if(p.getAllAssociatedParts().size()>0)
+        {
+            productHasPartErrorMsg();
+        }
+        else if(confirmDelete(p.getName())) {
             try{inv.deleteProduct(p);} catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    //==================================================================
+    //Other Actions
+    //==================================================================
+
+    /**
+     * Runs when the exit button is pressed and exits the form
+     * @param actionEvent event captured on button press
+     */
+    public void onExitBtn(ActionEvent actionEvent)
+    {
+        closeForm();
     }
 
     //==================================================================
@@ -353,6 +365,43 @@ public class MainMenuController implements Initializable {
     }
 
     /**
+     * method to close the form
+     */
+    private void closeForm()
+    {
+        Stage stage = (Stage) exitBtn.getScene().getWindow();
+        stage.close();
+    }
+
+    /**
+     * Brings up a dialog to confirm if the user wants a part deleted
+     * @param name the name of the part the user wants deleted
+     * @return true if the user choses yes. false if not.
+     */
+    private boolean confirmDelete(String name)
+    {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm removal");
+        alert.setHeaderText("Confirm removal");
+        alert.setContentText("Are you sure you want to delete " + name + "?");
+        ButtonType yesBtn = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType noBtn = new ButtonType("No", ButtonBar.ButtonData.NO);
+
+        alert.getButtonTypes().setAll(yesBtn, noBtn);
+
+        ButtonType anwser = alert.showAndWait().orElse(ButtonType.NO);
+        if(anwser == yesBtn)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    //==================================================================
+    //Error Message Methods
+    //==================================================================
+
+    /**
      * Displays an error message for searching with an empty search bar
      */
     private void emptySearchErrorMsg()
@@ -374,6 +423,19 @@ public class MainMenuController implements Initializable {
         alert.setTitle("Nothing Selected");
         alert.setHeaderText("Nothing Selected");
         alert.setContentText("Please select a part to Modify");
+
+        alert.showAndWait();
+    }
+
+    /**
+     * Displays an error message for when a product has an associated part.
+     */
+    private void productHasPartErrorMsg()
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Product has part");
+        alert.setHeaderText("Product has part");
+        alert.setContentText("Cannot delete product if it has an associated part");
 
         alert.showAndWait();
     }

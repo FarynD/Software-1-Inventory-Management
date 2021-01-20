@@ -117,11 +117,7 @@ public class ModifyPartFormController implements Initializable {
 
         if (nameInput.getText().isBlank() || invInput.getText().isBlank() || priceInput.getText().isBlank() || maxInput.getText().isBlank() || minInput.getText().isBlank() || machineIdInput.getText().isBlank())
         {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Empty Input");
-            alert.setHeaderText("Empty Input");
-            alert.setContentText("Please make sure there is information in all fields");
-            alert.showAndWait();
+            emptySearchErrorMsg();
         }
         else {
             if (radioGroup.getSelectedToggle() == inHouseRadio) {
@@ -129,6 +125,11 @@ public class ModifyPartFormController implements Initializable {
                 try
                 {
                     InHouse p = new InHouse(Integer.parseInt(idInput.getText()), nameInput.getText(), Double.parseDouble(priceInput.getText()), Integer.parseInt(invInput.getText()), Integer.parseInt(minInput.getText()), Integer.parseInt(maxInput.getText()), Integer.parseInt(machineIdInput.getText()));
+                    if(!checkInvMinMax(p.getStock(), p.getMin(),p.getMax()))
+                    {
+                        invMinMaxErrorMsg();
+                        return;
+                    }
                     inv.updatePart(p.getId(), p);
                     closeForm();
                 }
@@ -186,6 +187,40 @@ public class ModifyPartFormController implements Initializable {
         stage.close();
     }
 
+
+    /**
+     * Tells if Inventory, Max, and min have values that work.
+     * @param inv amount of inventory
+     * @param min the minimum amount
+     * @param max the maximum amount
+     * @return wether or not max is greater than or equal to inventory and inventory is greater than or equal to minimum
+     */
+    private boolean checkInvMinMax(int inv, int min, int max)
+    {
+        if(max >= inv && inv >= min)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    //==================================================================
+    //Error Message Methods
+    //==================================================================
+
+    /**
+     * Displays an error message for searching with an empty search bar
+     */
+    private void emptySearchErrorMsg()
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Part Not Found");
+        alert.setHeaderText("Part Not Found");
+        alert.setContentText("There is no part with this name or ID");
+
+        alert.showAndWait();
+    }
+
     /**
      * Displays an error message for incorrect input
      */
@@ -198,4 +233,18 @@ public class ModifyPartFormController implements Initializable {
 
         alert.showAndWait();
     }
+
+    /**
+     * Displays an error message for incorrect input
+     */
+    private void invMinMaxErrorMsg()
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Invalid Inventory, Min, or Max");
+        alert.setHeaderText("Invalid Inventory, Min, or Max");
+        alert.setContentText("Max must be greater than Min and inventory must be in between or equal to them");
+
+        alert.showAndWait();
+    }
 }
+

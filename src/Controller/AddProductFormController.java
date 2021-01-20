@@ -131,14 +131,14 @@ public class AddProductFormController implements Initializable {
         Part p = associatedPartsTbl.getSelectionModel().getSelectedItem();
         if( p == null)
         {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Nothing Selected");
-            alert.setHeaderText("Nothing Selected");
-            alert.setContentText("Please select a part to Modify");
-            alert.showAndWait();
+            nothingSelectedErrorMsg();
             return;
         }
-        associatedParts.remove(p);
+        else if(confirmDelete(p.getName()))
+        {
+            associatedParts.remove(p);
+        }
+        
     }
 
     /**
@@ -155,23 +155,20 @@ public class AddProductFormController implements Initializable {
             }
             if (idInput.getText().isBlank() || nameInput.getText().isBlank() || invInput.getText().isBlank() || priceInput.getText().isBlank() || maxInput.getText().isBlank() || minInput.getText().isBlank())
             {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Empty Input");
-                alert.setHeaderText("Empty Input");
-                alert.setContentText("Please make sure there is information in all fields");
-                alert.showAndWait();
+                emptySearchErrorMsg();
                 return;
             }
             if(Double.parseDouble(priceInput.getText()) < totalPrice)
             {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Total Price");
-                alert.setHeaderText("Total Price");
-                alert.setContentText("Please make sure the Total price is greater than or equal to the total price of all associated parts");
-                alert.showAndWait();
+                wrongPriceErrorMsg();
                 return;
             }
             Product p = new Product(Integer.parseInt(idInput.getText()), nameInput.getText(), Double.parseDouble(priceInput.getText()), Integer.parseInt(invInput.getText()), Integer.parseInt(minInput.getText()), Integer.parseInt(maxInput.getText()));
+            if(!checkInvMinMax(p.getStock(),p.getMin(),p.getMax()))
+            {
+                invMinMaxErrorMsg();
+                return;
+            }
             for(int x = 0; x < associatedParts.size(); x++)
             {
                 p.addAssociatedPart(associatedParts.get(x));
@@ -268,6 +265,46 @@ public class AddProductFormController implements Initializable {
     }
 
 
+    /**
+     * Tells if Inventory, Max, and min have values that work.
+     * @param inv amount of inventory
+     * @param min the minimum amount
+     * @param max the maximum amount
+     * @return wether or not max is greater than or equal to inventory and inventory is greater than or equal to minimum
+     */
+    private boolean checkInvMinMax(int inv, int min, int max)
+    {
+        if(max >= inv && inv >= min)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Brings up a dialog to confirm if the user wants a part deleted
+     * @param name the name of the part the user wants deleted
+     * @return true if the user choses yes. false if not.
+     */
+    private boolean confirmDelete(String name)
+    {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm removal");
+        alert.setHeaderText("Confirm removal");
+        alert.setContentText("Are you sure you want to delete " + name + "?");
+        ButtonType yesBtn = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType noBtn = new ButtonType("No", ButtonBar.ButtonData.NO);
+
+        alert.getButtonTypes().setAll(yesBtn, noBtn);
+
+        ButtonType anwser = alert.showAndWait().orElse(ButtonType.NO);
+        if(anwser == yesBtn)
+        {
+            return true;
+        }
+        return false;
+    }
+
     //==================================================================
     //Error Message Methods
     //==================================================================
@@ -307,6 +344,31 @@ public class AddProductFormController implements Initializable {
         alert.setTitle("Nothing Selected");
         alert.setHeaderText("Nothing Selected");
         alert.setContentText("Please select a part to Modify");
+        alert.showAndWait();
+    }
+
+    /**
+     * Displays an error message for incorrect input
+     */
+    private void invMinMaxErrorMsg()
+    {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Invalid Inventory, Min, or Max");
+        alert.setHeaderText("Invalid Inventory, Min, or Max");
+        alert.setContentText("Max must be greater than Min and inventory must be in between or equal to them");
+
+        alert.showAndWait();
+    }
+
+    /**
+     * Displays an error message for a wrong price
+     */
+    private void wrongPriceErrorMsg()
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Incorrect Price");
+        alert.setHeaderText("Incorrect Price");
+        alert.setContentText("Please make sure your total price is more than the sum of your part prices.");
         alert.showAndWait();
     }
 }
