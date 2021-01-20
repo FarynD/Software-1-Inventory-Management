@@ -19,6 +19,11 @@ import java.text.NumberFormat;
 
 public class MainMenu extends Application {
 
+    /**
+     * Starts the program
+     * @param primaryStage The main stage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
 
@@ -38,6 +43,10 @@ public class MainMenu extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Adds test data to the inventory
+     * @param inv Inventory used by the main program.
+     */
     private void addTestData(Inventory inv)
     {
 
@@ -54,13 +63,13 @@ public class MainMenu extends Application {
         Part part5 = new Outsourced(6, "part 7", 5.33, 3,1, 5, "Company B");
         inv.addPart(part4);
         inv.addPart(part5);
-        inv.addPart(new Outsourced(7, "part 8", 2.45, 1,1, 3, "Company C"));
-        inv.addPart(new Outsourced(8, "part 9", 2.45, 6,1, 6, "Company A"));
-        inv.addPart(new Outsourced(9, "part 10", 2.45, 2,1, 3, "Company B"));
+        inv.addPart(new Outsourced(7, "test 1", 2.45, 1,1, 3, "Company C"));
+        inv.addPart(new Outsourced(8, "test 2", 2.45, 6,1, 6, "Company A"));
+        inv.addPart(new Outsourced(9, "test 3", 2.45, 2,1, 3, "Company B"));
 
         Product prod1 = new Product(0, "product 0", 20.50, 3, 1, 10);
         Product prod2 = new Product(1, "product 1", 50.99, 7, 1, 10);
-        Product prod3 = new Product(2, "product 2", 26.24, 3, 1, 10);
+        Product prod3 = new Product(2, "test 1", 26.24, 3, 1, 10);
 
         prod1.addAssociatedPart(part1);
         prod1.addAssociatedPart(part4);
@@ -69,17 +78,9 @@ public class MainMenu extends Application {
         prod3.addAssociatedPart(part3);
         prod3.addAssociatedPart(part5);
 
-
-
-
         inv.addProduct(prod1);
         inv.addProduct(prod2);
         inv.addProduct(prod3);
-    }
-
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
 
